@@ -159,7 +159,7 @@ export const constantRoutes = [
         path: 'dashboard',
         component: () => import('@/views/dashboard/index'),
         name: 'Dashboard',
-        meta: { title: 'Dashboard', icon: 'dashboard', affix: true }
+        meta: { title: '首页', icon: 'dashboard', affix: true }
       }
     ]
   }
@@ -429,16 +429,17 @@ export const constantRoutes = [
 // ]
 export const asyncRoutes = [
   {
-    path: '/permission',
+    path: '/',
     component: Layout,
-    redirect: '/permission/page',
-    alwaysShow: true, // will always show the root menu
-    name: 'Permission',
-    meta: {
-      title: 'Permission',
-      icon: 'lock',
-      roles: ['admin', 'editor'] // you can set roles in root nav
-    }
+    name: 'User',
+    children: [
+      {
+        path: 'User',
+        component: () => import('@/views/user/index'),
+        name: 'User',
+        meta: { title: '账号管理', icon: 'user', roles: ['admin'] }
+      }
+    ]
   }
 ]
 
