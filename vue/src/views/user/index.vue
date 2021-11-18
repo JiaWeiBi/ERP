@@ -51,12 +51,19 @@
       style="width: 100%"
       @sort-change="sortChange"
     />
-    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
+    <pagination
+      v-show="total > 0"
+      :total="total"
+      :page.sync="listQuery.page"
+      :limit.sync="listQuery.limit"
+      @pagination="getList"
+    />
   </div>
 </template>
 <script>
 import Pagination from '@/components/Pagination'
 import { levelOptions } from '@/common/options'
+import { commonRequest } from '@/api/common'
 export default {
   name: 'UserMgr',
   components: { Pagination },
@@ -71,45 +78,8 @@ export default {
         level: null
       },
       levelOptions: levelOptions,
-      sortOptions: [
-        { label: 'ID Ascending', key: '+id' },
-        { label: 'ID Descending', key: '-id' }
-      ],
-      statusOptions: ['published', 'draft', 'deleted'],
-      showReviewer: false,
-      temp: {
-        id: undefined,
-        importance: 1,
-        remark: '',
-        timestamp: new Date(),
-        title: '',
-        type: '',
-        status: 'published'
-      },
       dialogFormVisible: false,
       dialogStatus: '',
-      textMap: {
-        update: 'Edit',
-        create: 'Create'
-      },
-      dialogPvVisible: false,
-      pvData: [],
-      rules: {
-        type: [
-          { required: true, message: 'type is required', trigger: 'change' }
-        ],
-        timestamp: [
-          {
-            type: 'date',
-            required: true,
-            message: 'timestamp is required',
-            trigger: 'change'
-          }
-        ],
-        title: [
-          { required: true, message: 'title is required', trigger: 'blur' }
-        ]
-      },
       downloadLoading: false
     }
   },
@@ -119,6 +89,10 @@ export default {
   methods: {
     getList() {
       this.listLoading = true
+      const query = {}
+      commonRequest('get', 'v1/user', query).then((res) => {
+        console.log('res===', res)
+      })
     }
   }
 }

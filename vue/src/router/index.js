@@ -429,15 +429,15 @@ export const constantRoutes = [
 // ]
 export const asyncRoutes = [
   {
-    path: '/',
+    path: '/user',
     component: Layout,
     name: 'User',
     children: [
       {
-        path: 'User',
+        path: 'index',
         component: () => import('@/views/user/index'),
-        name: 'User',
-        meta: { title: '账号管理', icon: 'user', roles: ['admin'] }
+        name: 'userIndex',
+        meta: { title: '账号管理', icon: 'user', roles: ['superAdmin'] }
       }
     ]
   }

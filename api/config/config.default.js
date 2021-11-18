@@ -18,9 +18,31 @@ module.exports = appInfo => {
   // add your middleware config here
   config.middleware = [];
 
+  config.cors = {
+    origin: '*',
+    allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH'
+  }
+  config.security = {
+    csrf: {
+      enable: false
+    }
+  }
+
+  config.sequelize = {
+    dialect: 'mysql',
+    host: '127.0.0.1',
+    port: 3306,
+    database: 'ERP',
+    username: "root",
+    password: '123456',
+    define: {
+      freezeTableName: true
+      // underscored: true
+    }
+  };
   // add your user config here
   const userConfig = {
-    // myAppName: 'egg',
+    myAppName: 'erp-egg',
   };
 
   return {
