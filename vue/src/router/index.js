@@ -5,6 +5,8 @@ Vue.use(Router)
 
 /* Layout */
 import Layout from '@/layout'
+import categoryRoutes from './modules/category'
+import companyRoutes from './modules/company'
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -162,7 +164,9 @@ export const constantRoutes = [
         meta: { title: '首页', icon: 'dashboard', affix: true }
       }
     ]
-  }
+  },
+  categoryRoutes,
+  companyRoutes
 ]
 
 /**
@@ -437,7 +441,7 @@ export const asyncRoutes = [
         path: 'index',
         component: () => import('@/views/user/index'),
         name: 'userIndex',
-        meta: { title: '账号管理', icon: 'user', roles: ['superAdmin'] }
+        meta: { title: '账号管理', icon: 'user', roles: ['superAdmin', 'admin'] }
       }
     ]
   }

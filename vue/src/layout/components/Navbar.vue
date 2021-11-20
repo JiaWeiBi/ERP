@@ -18,6 +18,9 @@
 
       </template>
 
+      <div class="international right-menu-item">
+        <span style="marigin-right:20px">{{ '当前用户: '+ name }}</span>
+      </div>
       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
         <div class="avatar-wrapper">
           <img :src="avatar" class="user-avatar">
@@ -62,7 +65,8 @@ export default {
     ...mapGetters([
       'sidebar',
       'avatar',
-      'device'
+      'device',
+      'name'
     ])
   },
   methods: {

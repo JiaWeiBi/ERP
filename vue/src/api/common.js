@@ -1,16 +1,32 @@
 import request from '@/utils/request'
 
-export function commonRequest(methed, url, query, body) {
-  switch (methed) {
+export function commonRequest(method, url, query, body) {
+  switch (method) {
     case 'get':
       return request({
-        methed: 'get',
+        method: 'get',
         url,
         params: query
       })
     case 'post':
-      break
+      return request({
+        method: 'post',
+        url,
+        params: query,
+        data: body
+      })
     case 'put':
-      break
+      return request({
+        method: 'put',
+        url,
+        params: query,
+        data: body
+      })
+    case 'delete':
+      return request({
+        method: 'delete',
+        url,
+        data: body
+      })
   }
 }

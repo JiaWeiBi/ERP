@@ -19,26 +19,29 @@ module.exports = appInfo => {
   config.middleware = [];
 
   config.cors = {
-    origin: '*',
-    allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH'
-  }
+    origin: 'http://127.0.0.1:9527',
+    credentials: true,
+    allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS',
+  };
   config.security = {
     csrf: {
-      enable: false
-    }
-  }
+      enable: false,
+    },
+    domainWhiteList: [ 'http://127.0.0.1:9527' ],
+  };
 
   config.sequelize = {
     dialect: 'mysql',
     host: '127.0.0.1',
     port: 3306,
     database: 'ERP',
-    username: "root",
+    username: 'root',
     password: '123456',
     define: {
-      freezeTableName: true
+      freezeTableName: true,
       // underscored: true
-    }
+    },
+    timezone: '+08:00'
   };
   // add your user config here
   const userConfig = {
