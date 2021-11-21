@@ -51,6 +51,7 @@ class UserController extends Controller {
           roles = [ 'admin' ];
           break;
         case 100:
+        default:
           roles = [ 'generalUser' ];
           break;
       }

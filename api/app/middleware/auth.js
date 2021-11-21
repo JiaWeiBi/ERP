@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = () => {
   return async function auth(ctx, next) {
     if (ctx.session.id) {
