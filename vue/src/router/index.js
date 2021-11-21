@@ -5,7 +5,7 @@ Vue.use(Router)
 
 /* Layout */
 import Layout from '@/layout'
-import categoryRoutes from './modules/category'
+import productionRoutes from './modules/production'
 import companyRoutes from './modules/company'
 
 /**
@@ -165,7 +165,7 @@ export const constantRoutes = [
       }
     ]
   },
-  categoryRoutes,
+  productionRoutes,
   companyRoutes
 ]
 

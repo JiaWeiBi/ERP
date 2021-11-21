@@ -23,8 +23,8 @@ class CompanyInfoController extends Controller {
     const { ctx } = this;
     const params = ctx.request.body;
 
-    if(!params.id){
-      ctx.fail(1005, '参数错误')
+    if (!params.id) {
+      ctx.fail(1005, '参数错误');
     }
     // @todo 检查权限
 

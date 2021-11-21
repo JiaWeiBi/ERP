@@ -29,20 +29,20 @@ class CompanyInfoService extends Service {
       where[Op.or] = [
         {
           name: {
-            [Op.substring]: params.keyword
-          }
+            [Op.substring]: params.keyword,
+          },
         },
         {
           representative: {
-            [Op.substring]: params.keyword
-          }
+            [Op.substring]: params.keyword,
+          },
         },
         {
           contact: {
-            [Op.substring]: params.keyword
-          }
-        }
-      ]
+            [Op.substring]: params.keyword,
+          },
+        },
+      ];
     }
     const res = await this.ctx.model.CompanyInfo.findAndCountAll({
       where,
@@ -53,15 +53,15 @@ class CompanyInfoService extends Service {
     return res || {};
   }
   async addCompanyInfo(params) {
-    params.creater = this.ctx.session.id
+    params.creater = this.ctx.session.id;
     return this.ctx.model.CompanyInfo.create(params);
   }
-  async updateCompanyInfo(params){
-    console.log(params)
+  async updateCompanyInfo(params) {
+    console.log(params);
     return this.ctx.model.CompanyInfo.update(params, {
       where: {
-        id: params.id
-      }
+        id: params.id,
+      },
     });
   }
 
@@ -73,6 +73,51 @@ class CompanyInfoService extends Service {
         id,
       },
     });
+  }
+  async searchAll(params) {
+    const where = {
+      state: 0,
+    };
+
+    if (params.score) {
+      where.score = {
+        [Op.eq]: params.score,
+      };
+    }
+    if (params.grade) {
+      where.grade = {
+        [Op.eq]: params.grade,
+      };
+    }
+    if (params.creater) {
+      where.creater = {
+        [Op.eq]: params.creater,
+      };
+    }
+    if (params.keyword) {
+      where[Op.or] = [
+        {
+          name: {
+            [Op.substring]: params.keyword,
+          },
+        },
+        {
+          representative: {
+            [Op.substring]: params.keyword,
+          },
+        },
+        {
+          contact: {
+            [Op.substring]: params.keyword,
+          },
+        },
+      ];
+    }
+    const res = await this.ctx.model.CompanyInfo.findAll({
+      where,
+      attributes: [ 'id', 'name' ],
+    });
+    return res || [];
   }
 }
 

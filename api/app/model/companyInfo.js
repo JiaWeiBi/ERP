@@ -7,20 +7,20 @@ module.exports = app => {
     id: { type: BIGINT, primaryKey: true, autoIncrement: true },
     name: STRING(100),
     representative: STRING(50),
-    contact:STRING(50),
-    contact_info:STRING(100),
+    contact: STRING(50),
+    contact_info: STRING(100),
     comment: STRING(255),
-    grade:STRING(10),
+    grade: STRING(10),
     score: INTEGER,
     inspect_time: DATE,
     leadtime: INTEGER,
     state: INTEGER,
     updatedAt: DATE,
     createdAt: DATE,
-    creater: INTEGER
+    creater: INTEGER,
   }, {
     // freezeTableName: true,
-    tableName: 'company_info'
+    tableName: 'company_info',
   });
 
   return CompanyInfo;

@@ -103,11 +103,11 @@
         :formatter="timezoneFormatter"
       />
       <el-table-column
-        label="生产周期"
+        label="生产周期(天)"
         prop="leadtime"
         sortable="custom"
         align="center"
-        width="120"
+        width="140"
       />
       <el-table-column label="操作" align="center" width="230" class-name="small-padding fixed-width">
         <template slot-scope="{row,$index}">

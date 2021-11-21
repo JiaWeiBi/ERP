@@ -41,7 +41,7 @@ module.exports = appInfo => {
       freezeTableName: true,
       // underscored: true
     },
-    timezone: '+08:00'
+    timezone: '+08:00',
   };
   // add your user config here
   const userConfig = {
