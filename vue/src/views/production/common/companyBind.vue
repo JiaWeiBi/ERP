@@ -78,36 +78,43 @@
         align="center"
       />
       <el-table-column
+        v-if="roleCheck(levelMap.Admin)"
         label="法人代表"
         prop="representative"
         align="center"
       />
       <el-table-column
+        v-if="roleCheck(levelMap.Admin)"
         label="联系人"
         prop="contact"
         align="center"
       />
       <el-table-column
+        v-if="roleCheck(levelMap.Admin)"
         label="联系方式"
         prop="contact_info"
         align="center"
       />
       <el-table-column
+        v-if="roleCheck(levelMap.Admin)"
         label="备注"
         prop="comment"
         align="center"
       />
       <el-table-column
+        v-if="roleCheck(levelMap.Admin)"
         label="评级"
         prop="grade"
         align="center"
       />
       <el-table-column
+        v-if="roleCheck(levelMap.Admin)"
         label="评分(100)"
         prop="score"
         align="center"
       />
       <el-table-column
+        v-if="roleCheck(levelMap.Admin)"
         label="考察时间"
         prop="inspect_time"
         align="center"
@@ -162,6 +169,8 @@
 import Pagination from '@/components/Pagination'
 import { commonRequest } from '@/api/common'
 import { timezoneFormatter } from '@/common/formatter'
+import { roleCheck } from '@/common/rolePermission'
+import { levelMap } from '@/common/options'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -195,6 +204,7 @@ export default {
         companyId: [{ required: true, message: '供应商为必选项' }]
       },
       temp: {},
+      levelMap: levelMap,
       categoryOptions: [],
       companyOptions: []
     }
@@ -269,6 +279,9 @@ export default {
     // ======formatter
     timezoneFormatter(row, column) {
       return timezoneFormatter(row[column.property])
+    },
+    roleCheck(params) {
+      return roleCheck(params)
     }
   }
 }
