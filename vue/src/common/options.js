@@ -4,6 +4,11 @@ export const levelOptions = [
   { key: 10, display_name: '管理员' },
   { key: 100, display_name: '员工' }
 ]
+export const levelMap = {
+  'SuperAdmin': 1,
+  'Admin': 10,
+  'Employee': 100
+}
 
 // 品类大项
 export const productionOptions = [

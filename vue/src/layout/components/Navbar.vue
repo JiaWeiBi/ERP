@@ -27,13 +27,6 @@
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown">
-          <!-- <router-link to="/profile/index">
-            <el-dropdown-item>Profile</el-dropdown-item>
-          </router-link> -->
-          <!-- <router-link to="/">
-            <el-dropdown-item>Dashboard</el-dropdown-item>
-          </router-link> -->
-
           <el-dropdown-item divided @click.native="logout">
             <span style="display:block;">退出登录</span>
           </el-dropdown-item>

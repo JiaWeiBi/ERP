@@ -61,26 +61,31 @@
         align="center"
       />
       <el-table-column
+        v-if="roleCheck(levelMap.Admin)"
         label="法人代表"
         prop="representative"
         align="center"
       />
       <el-table-column
+        v-if="roleCheck(levelMap.Admin)"
         label="联系人"
         prop="contact"
         align="center"
       />
       <el-table-column
+        v-if="roleCheck(levelMap.Admin)"
         label="联系方式"
         prop="contact_info"
         align="center"
       />
       <el-table-column
+        v-if="roleCheck(levelMap.Admin)"
         label="备注"
         prop="comment"
         align="center"
       />
       <el-table-column
+        v-if="roleCheck(levelMap.SuperAdmin)"
         label="评级"
         prop="grade"
         sortable="custom"
@@ -88,6 +93,7 @@
         width="80"
       />
       <el-table-column
+        v-if="roleCheck(levelMap.SuperAdmin)"
         label="评分(100)"
         prop="score"
         sortable="custom"
@@ -95,6 +101,7 @@
         width="120"
       />
       <el-table-column
+        v-if="roleCheck(levelMap.SuperAdmin)"
         label="考察时间"
         prop="inspect_time"
         sortable="custom"
@@ -134,6 +141,8 @@
 import Pagination from '@/components/Pagination'
 import { timezoneFormatter } from '@/common/formatter'
 import { commonRequest } from '@/api/common'
+import { levelMap } from '@/common/options'
+import { roleCheck } from '@/common/rolePermission'
 import { mapGetters } from 'vuex'
 import Action from './action.vue'
 
@@ -162,7 +171,8 @@ export default {
         'create': '添加',
         'edit': '编辑'
       },
-      selectItem: null
+      selectItem: null,
+      levelMap: levelMap
     }
   },
 
@@ -209,6 +219,9 @@ export default {
     sortChange() {},
     timezoneFormatter(row, column) {
       return timezoneFormatter(row[column.property])
+    },
+    roleCheck(params) {
+      return roleCheck(params)
     }
   }
 }
