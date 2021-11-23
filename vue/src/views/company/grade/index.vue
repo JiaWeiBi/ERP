@@ -114,7 +114,7 @@ export default {
       dataForm: [],
       rules: {
         name: [{ required: true, message: '账号为必填项' }],
-        score: [{ required: true, message: '密码为必填项' }]
+        score: [{ required: true, message: '评分为必填项' }]
       },
       temp: {}
     }

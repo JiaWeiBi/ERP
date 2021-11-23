@@ -24,13 +24,13 @@
         <el-form-item label="备注" prop="comment">
           <el-input v-model="temp.comment" type="textarea" :autosize="{ minRows: 2, maxRows: 4}" />
         </el-form-item>
-        <el-form-item label="评级" prop="grade">
+        <el-form-item v-if="roleCheck(levelMap.SuperAdmin)" label="评级" prop="grade">
           <el-input v-model="temp.grade" />
         </el-form-item>
-        <el-form-item label="评分" prop="score">
+        <el-form-item v-if="roleCheck(levelMap.SuperAdmin)" label="评分" prop="score">
           <el-input v-model="temp.score" type="number" min="0" max="100" />
         </el-form-item>
-        <el-form-item label="考察时间" prop="inspect_time">
+        <el-form-item v-if="roleCheck(levelMap.SuperAdmin)" label="考察时间" prop="inspect_time">
           <el-date-picker v-model="temp.inspect_time" type="datetime" />
         </el-form-item>
         <el-form-item label="生产周期(天)" prop="leadtime">
@@ -47,6 +47,8 @@
 
 <script>
 import { commonRequest } from '@/api/common'
+import { roleCheck } from '@/common/rolePermission'
+import { levelMap } from '@/common/options'
 
 export default {
   name: 'CompanyInfoAction',
@@ -79,7 +81,8 @@ export default {
         name: [{ required: true, message: '账号为必填项' }],
         representative: [{ required: true, message: '法人代表为必填项' }]
       },
-      temp: {}
+      temp: {},
+      levelMap: levelMap
     }
   },
   computed: {
@@ -121,6 +124,9 @@ export default {
           })
         }
       })
+    },
+    roleCheck(params) {
+      return roleCheck(params)
     }
   }
 }

@@ -5,5 +5,8 @@ export const dateFormatter = function(time) {
 }
 
 export const timezoneFormatter = function(time) {
+  if (!time) {
+    return null
+  }
   return moment(time).format('YYYY-MM-DD HH:mm')
 }

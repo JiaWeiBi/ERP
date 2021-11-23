@@ -29,6 +29,7 @@
         查询
       </el-button>
       <el-button
+        v-if="roleCheck(levelMap.Admin)"
         class="filter-item"
         style="margin-left: 10px"
         type="primary"
@@ -116,7 +117,7 @@
         align="center"
         width="140"
       />
-      <el-table-column label="操作" align="center" width="230" class-name="small-padding fixed-width">
+      <el-table-column v-if="roleCheck(levelMap.SuperAdmin)" label="操作" align="center" width="230" class-name="small-padding fixed-width">
         <template slot-scope="{row,$index}">
           <el-button size="mini" type="primary" @click="handleEdit(row,$index)">
             编辑

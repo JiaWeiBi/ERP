@@ -2,6 +2,7 @@
   <div class="app-container">
     <div class="filter-container">
       <el-button
+        v-if="roleCheck(levelMap.Admin)"
         class="filter-item"
         style="margin-left: 10px"
         type="primary"
@@ -81,6 +82,8 @@
 import Pagination from '@/components/Pagination'
 import { commonRequest } from '@/api/common'
 import { mapGetters } from 'vuex'
+import { roleCheck } from '@/common/rolePermission'
+import { levelMap } from '@/common/options'
 
 export default {
   name: 'Grade',
@@ -111,7 +114,8 @@ export default {
       rules: {
         name: [{ required: true, message: '名称为必填项' }]
       },
-      temp: {}
+      temp: {},
+      levelMap: levelMap
     }
   },
 
@@ -157,7 +161,10 @@ export default {
         this.getList()
       })
     },
-    sortChange() {}
+    sortChange() {},
+    roleCheck(params) {
+      return roleCheck(params)
+    }
   }
 }
 </script>
