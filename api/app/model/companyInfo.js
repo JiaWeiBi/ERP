@@ -17,7 +17,7 @@ module.exports = app => {
     state: INTEGER,
     updatedAt: DATE,
     createdAt: DATE,
-    creater: INTEGER,
+    creator: INTEGER,
   }, {
     // freezeTableName: true,
     tableName: 'company_info',

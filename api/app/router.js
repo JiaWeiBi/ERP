@@ -17,6 +17,7 @@ module.exports = app => {
   // 分类通用
   router.resources('v1/production/category', '/v1/production/category', auth, controller.v1.production.category);
   router.resources('v1/production/company', '/v1/production/company', auth, controller.v1.production.company);
+  router.resources('v1/project', '/v1/project', auth, controller.v1.project.index);
 
   // 模糊查询所有
   router.get('v1/searchAll/category', '/v1/searchAll/category', auth, controller.v1.searchAll.category);

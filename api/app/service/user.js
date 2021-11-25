@@ -37,7 +37,7 @@ class UserService extends Service {
     }
     const res = await this.ctx.model.User.findAndCountAll({
       where,
-      attributes: [ 'id', 'acc', 'phone', 'email', 'level', 'createdAt', 'updatedAt', 'creater' ],
+      attributes: [ 'id', 'acc', 'phone', 'email', 'level', 'createdAt', 'updatedAt', 'creator' ],
       offset,
       limit,
     });
@@ -45,7 +45,7 @@ class UserService extends Service {
   }
 
   async addUser(params) {
-    params.creater = this.ctx.session.id;
+    params.creator = this.ctx.session.id;
     params.createdAt = Math.floor(Date.now() / 1000);
     params.updatedAt = params.createdAt;
 

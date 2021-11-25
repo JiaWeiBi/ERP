@@ -433,6 +433,55 @@ export const constantRoutes = [
 // ]
 export const asyncRoutes = [
   {
+    path: '/grade',
+    component: Layout,
+    name: 'grade',
+    meta: {
+      title: '评级',
+      icon: 'list'
+    },
+    alwaysShow: true,
+    children: [
+      {
+        path: 'index/A',
+        component: () => import('@/views/company/gradeRouter/index'),
+        name: 'gradeRouterIndex',
+        meta: { title: 'A', icon: 'el-icon-s-help', roles: ['superAdmin', 'admin'] }
+      },
+      {
+        path: 'index/B',
+        component: () => import('@/views/company/gradeRouter/index'),
+        name: 'gradeRouterIndex',
+        meta: { title: 'B', icon: 'el-icon-s-help', roles: ['superAdmin', 'admin'] }
+      },
+      {
+        path: 'indexC',
+        component: () => import('@/views/company/gradeRouter/index'),
+        name: 'gradeRouterIndex',
+        meta: { title: 'C', icon: 'el-icon-s-help', roles: ['superAdmin', 'admin'] }
+      },
+      {
+        path: 'indexD',
+        component: () => import('@/views/company/gradeRouter/index'),
+        name: 'gradeRouterIndex',
+        meta: { title: 'D', icon: 'el-icon-s-help' }
+      }
+    ]
+  },
+  {
+    path: '/project',
+    component: Layout,
+    name: 'Project',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/project/index'),
+        name: 'projectIndex',
+        meta: { title: '项目管理', icon: 'table' }
+      }
+    ]
+  },
+  {
     path: '/user',
     component: Layout,
     name: 'User',

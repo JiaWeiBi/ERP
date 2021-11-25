@@ -12,7 +12,7 @@ module.exports = app => {
     level: INTEGER,
     createdAt: BIGINT,
     updatedAt: BIGINT,
-    creater: BIGINT,
+    creator: BIGINT,
     state: INTEGER,
   }, {
     timestamps: false,

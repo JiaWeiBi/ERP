@@ -22,6 +22,11 @@ class CategoryService extends Service {
         [Op.substring]: params.keyword,
       };
     }
+    if (params.creator) {
+      where.creator = {
+        [Op.eq]: params.creator,
+      };
+    }
     const res = await this.ctx.model.Category.findAndCountAll({
       where,
       attributes: [ 'id', 'name', 'type', 'desc' ],
@@ -41,6 +46,7 @@ class CategoryService extends Service {
     return res ? res.dataValues : null;
   }
   async addCategory(params) {
+    params.creator = this.ctx.session.id
     return this.ctx.model.Category.create(params);
   }
   async deleteCategory(id) {
@@ -66,6 +72,12 @@ class CategoryService extends Service {
     if (params.keyword) {
       where.name = {
         [Op.substring]: params.keyword,
+      };
+    }
+
+    if (params.creator) {
+      where.creator = {
+        [Op.eq]: params.creator,
       };
     }
     const res = await this.ctx.model.Category.findAll({

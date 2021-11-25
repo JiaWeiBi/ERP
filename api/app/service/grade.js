@@ -22,13 +22,13 @@ class GradeService extends Service {
         [Op.substring]: params.keyword,
       };
     }
-    const res = await this.ctx.model.Grade.findAll({
+    const res = await this.ctx.model.Grade.findAndCountAll({
       where,
       attributes: [ 'id', 'name', 'score', 'desc' ],
       offset,
       limit,
     });
-    return res || [];
+    return res || {};
   }
   async findByName(name) {
     const res = await this.ctx.model.Grade.findOne({

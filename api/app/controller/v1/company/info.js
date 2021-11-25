@@ -1,11 +1,16 @@
 'use strict';
 
 const Controller = require('egg').Controller;
+const { RoleLevel } = require('../../../constant/roleLevel')
 
 class CompanyInfoController extends Controller {
   async index() {
     const { ctx } = this;
 
+    // 管理员只能查看自己录入的数据
+    if( ctx.session.level === RoleLevel.Admin) {
+      ctx.query.creator = ctx.session.id
+    }
     return ctx.success(await ctx.service.companyInfo.findWithPager({
       ...ctx.query,
     }));

@@ -21,9 +21,9 @@ class CompanyInfoService extends Service {
         [Op.eq]: params.grade,
       };
     }
-    if (params.creater) {
-      where.creater = {
-        [Op.eq]: params.creater,
+    if (params.creator) {
+      where.creator = {
+        [Op.eq]: params.creator,
       };
     }
 
@@ -55,7 +55,7 @@ class CompanyInfoService extends Service {
     return res || {};
   }
   async addCompanyInfo(params) {
-    params.creater = this.ctx.session.id;
+    params.creator = this.ctx.session.id;
     return this.ctx.model.CompanyInfo.create(params);
   }
   async updateCompanyInfo(params) {
@@ -91,9 +91,9 @@ class CompanyInfoService extends Service {
         [Op.eq]: params.grade,
       };
     }
-    if (params.creater) {
-      where.creater = {
-        [Op.eq]: params.creater,
+    if (params.creator) {
+      where.creator = {
+        [Op.eq]: params.creator,
       };
     }
     if (params.keyword) {

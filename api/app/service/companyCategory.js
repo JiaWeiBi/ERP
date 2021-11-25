@@ -23,10 +23,12 @@ class CompanyCategoryService extends Service {
       };
     }
 
-    // if (params.type) {
-    //   where['$category.type'] = params.type
-    // }
-
+    if (params.creator) {
+      where.creator = {
+        [Op.eq]: params.creator,
+      };
+    }
+    
     const res = await this.ctx.model.CompanyCategory.findAndCountAll({
       where,
       include: [
