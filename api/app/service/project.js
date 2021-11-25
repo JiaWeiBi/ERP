@@ -49,7 +49,7 @@ class ProjectService extends Service {
   async addProject(params) {
     params.creator = this.ctx.session.id
     const pro = await this.ctx.model.Project.create(params)
-    let companyList = params.companyId || []
+    let companyList = params.companyIds || []
     companyList = companyList.map( c => {
       return {
         projectId: pro.id,
@@ -60,7 +60,27 @@ class ProjectService extends Service {
 
     return await this.ctx.model.CompanyProject.bulkCreate(companyList)
   }
+
+  async updateProject(params) {
+    await this.ctx.model.CompanyProject.destroy({ where: {projectId: params.id}})
+    params.creator = this.ctx.session.id
+
+    let companyList = params.companyIds || []
+    companyList = companyList.map( c => {
+      return {
+        projectId: params.id,
+        companyId: c,
+        creator: params.creator
+      }
+    })
+    await this.ctx.model.Project.update(params, {
+      where: { id: params.id }
+    })
+    return await this.ctx.model.CompanyProject.bulkCreate(companyList)
+  }
+
   async deleteProject(id) {
+    await this.ctx.model.CompanyProject.update({state: 1}, { projectId: id})
     return await this.ctx.model.Project.update({
       state: 1,
     }, {

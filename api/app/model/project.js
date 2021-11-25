@@ -14,7 +14,7 @@ module.exports = app => {
   });
 
   Project.associate = function() {
-    app.model.Project.hasMany(app.model.CompanyProject, { foreignKey: 'id', targetKey: 'projectId', as: 'company' });
+    app.model.Project.hasMany(app.model.CompanyProject, { foreignKey: 'projectId', targetKey: 'id', as: 'company' });
   };
 
   return Project;

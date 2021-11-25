@@ -25,6 +25,16 @@ class ProjectController extends Controller {
     return ctx.success(await ctx.service.project.addProject(params));
   }
 
+  async update() {
+    const { ctx } = this;
+    const params = ctx.request.body;
+
+    if(!params.id){
+      return ctx.fail(1004, '该项目不存在');
+    }
+    return ctx.success(await ctx.service.project.updateProject(params));
+  }
+
   async destroy() {
     const { ctx } = this;
     const id = ctx.params.id;

@@ -66,6 +66,9 @@
 
       <el-table-column label="操作" align="center" width="230" class-name="small-padding fixed-width">
         <template slot-scope="{row,$index}">
+          <el-button size="mini" type="primary" @click="handleEdit(row,$index)">
+            编辑
+          </el-button>
           <el-button size="mini" type="danger" @click="handleDelete(row,$index)">
             删除
           </el-button>
@@ -97,7 +100,7 @@
         <el-button @click="dialogFormVisible = false">
           取消
         </el-button>
-        <el-button type="primary" @click="dialogStatus==='create'?createData():updateData()">
+        <el-button type="primary" @click="createData()">
           确定
         </el-button>
       </div>
@@ -161,7 +164,8 @@ export default {
     createData() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
-          commonRequest('post', this.actionUrl, {}, this.temp).then(() => {
+          const url = this.dialogStatus === 'create' ? this.actionUrl : this.actionUrl + '/' + this.temp.id
+          commonRequest(this.dialogStatus === 'create' ? 'post' : 'put', url, {}, this.temp).then(() => {
             this.temp = {}
             this.getList()
             this.dialogFormVisible = false
@@ -174,6 +178,17 @@ export default {
           })
         }
       })
+    },
+    handleEdit(row) {
+      this.dialogStatus = 'edit'
+      this.temp = row
+      this.temp.companyIds = []
+      row.company.forEach(c => {
+        this.temp.companyIds.push(c.companyId)
+      })
+
+      this.temp = { ...this.temp }
+      this.dialogFormVisible = true
     },
     handleDelete(row, index) {
       commonRequest('delete', this.actionUrl + '/' + row.id, null, { ids: [row.id] }).then((res) => {
@@ -197,6 +212,7 @@ export default {
       let cl = this.companyOptions.filter(c => {
         return l1.includes(c.id)
       })
+
       cl = cl.map(o => { return o.name })
       return cl.join('|')
     }
