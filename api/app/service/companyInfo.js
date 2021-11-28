@@ -48,7 +48,8 @@ class CompanyInfoService extends Service {
     }
     const res = await this.ctx.model.CompanyInfo.findAndCountAll({
       where,
-      attributes: [ 'id', 'name', 'representative', 'contact', 'contact_info', 'comment', 'grade', 'score', 'inspect_time', 'leadtime' ],
+      attributes: [ 'id', 'name', 'representative', 'contact', 'contact_info', 'comment', 'grade', 'score', 'inspect_time', 'leadtime',
+        'cooporateType', 'contract' ],
       offset,
       limit,
     });
@@ -59,7 +60,6 @@ class CompanyInfoService extends Service {
     return this.ctx.model.CompanyInfo.create(params);
   }
   async updateCompanyInfo(params) {
-    console.log(params);
     return this.ctx.model.CompanyInfo.update(params, {
       where: {
         id: params.id,

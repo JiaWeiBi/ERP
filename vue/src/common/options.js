@@ -23,3 +23,7 @@ export const productionMap = {
   Accessories: 5
 }
 
+// 合作方式
+export const cooporateTypeOptions = [
+  { id: 1, name: '战略合作' }
+]

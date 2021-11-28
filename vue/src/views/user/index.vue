@@ -189,7 +189,6 @@ export default {
       const res = levelOptions.filter((op) => {
         return op.key > this.roleLevel
       })
-      console.log(res)
       return res
     }
   },

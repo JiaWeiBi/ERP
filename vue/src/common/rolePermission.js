@@ -5,10 +5,8 @@ export function roleCheck(rolesLevel) {
   if (Array.isArray(rolesLevel)) {
     return rolesLevel.includes(role)
   } else if (Number.isInteger(rolesLevel)) {
-    console.log('1=', rolesLevel, role)
     return role <= rolesLevel
   } else {
-    console.log('2=', typeof rolesLevel)
     return false
   }
 }

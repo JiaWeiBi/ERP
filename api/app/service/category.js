@@ -46,7 +46,7 @@ class CategoryService extends Service {
     return res ? res.dataValues : null;
   }
   async addCategory(params) {
-    params.creator = this.ctx.session.id
+    params.creator = this.ctx.session.id;
     return this.ctx.model.Category.create(params);
   }
   async deleteCategory(id) {

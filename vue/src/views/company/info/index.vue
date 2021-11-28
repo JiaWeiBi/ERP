@@ -117,6 +117,17 @@
         align="center"
         width="140"
       />
+      <el-table-column
+        label="合作方式"
+        prop="cooporateType"
+        align="center"
+        :formatter="cooporateTypeFormatter"
+      />
+      <el-table-column
+        label="已签合同"
+        prop="contract"
+        align="center"
+      />
       <el-table-column v-if="roleCheck(levelMap.SuperAdmin)" label="操作" align="center" width="230" class-name="small-padding fixed-width">
         <template slot-scope="{row,$index}">
           <el-button size="mini" type="primary" @click="handleEdit(row,$index)">
@@ -142,7 +153,7 @@
 import Pagination from '@/components/Pagination'
 import { timezoneFormatter } from '@/common/formatter'
 import { commonRequest } from '@/api/common'
-import { levelMap } from '@/common/options'
+import { levelMap, cooporateTypeOptions } from '@/common/options'
 import { roleCheck } from '@/common/rolePermission'
 import { mapGetters } from 'vuex'
 import Action from './action.vue'
@@ -223,6 +234,15 @@ export default {
     },
     roleCheck(params) {
       return roleCheck(params)
+    },
+    cooporateTypeFormatter(row) {
+      let res = ''
+      cooporateTypeOptions.forEach(op => {
+        if (op.id === parseInt(row.cooporateType)) {
+          res = op.name
+        }
+      })
+      return res
     }
   }
 }

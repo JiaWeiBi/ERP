@@ -18,6 +18,8 @@ module.exports = app => {
     updatedAt: DATE,
     createdAt: DATE,
     creator: INTEGER,
+    cooporateType: INTEGER,
+    contract: STRING(50),
   }, {
     // freezeTableName: true,
     tableName: 'company_info',

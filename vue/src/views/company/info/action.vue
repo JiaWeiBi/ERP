@@ -34,7 +34,15 @@
           <el-date-picker v-model="temp.inspect_time" type="datetime" />
         </el-form-item>
         <el-form-item label="生产周期(天)" prop="leadtime">
-          <el-input v-model="temp.leadtime" />
+          <el-input v-model="temp.leadtime" type="number" />
+        </el-form-item>
+        <el-form-item label="合作方式">
+          <el-select v-model="temp.cooporateType" class="filter-item" placeholder="选择合作方式">
+            <el-option v-for="item in cooporateTypeOptions" :key="item.id" :label="item.name" :value="item.id" />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="已签合同" prop="contract">
+          <el-input v-model="temp.contract" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -48,7 +56,7 @@
 <script>
 import { commonRequest } from '@/api/common'
 import { roleCheck } from '@/common/rolePermission'
-import { levelMap } from '@/common/options'
+import { levelMap, cooporateTypeOptions } from '@/common/options'
 
 export default {
   name: 'CompanyInfoAction',
@@ -81,6 +89,7 @@ export default {
         name: [{ required: true, message: '账号为必填项' }],
         representative: [{ required: true, message: '法人代表为必填项' }]
       },
+      cooporateTypeOptions: cooporateTypeOptions,
       temp: {},
       levelMap: levelMap
     }

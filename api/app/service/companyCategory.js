@@ -28,7 +28,7 @@ class CompanyCategoryService extends Service {
         [Op.eq]: params.creator,
       };
     }
-    
+
     const res = await this.ctx.model.CompanyCategory.findAndCountAll({
       where,
       include: [

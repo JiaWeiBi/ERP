@@ -27,9 +27,9 @@ class ProjectService extends Service {
       include: [
         {
           model: this.ctx.model.CompanyProject,
-          attributes: ['id', 'companyId'],
+          attributes: [ 'id', 'companyId' ],
           as: 'company',
-        }
+        },
       ],
       attributes: [ 'id', 'name', 'desc' ],
       offset,
@@ -47,40 +47,40 @@ class ProjectService extends Service {
     return res ? res.dataValues : null;
   }
   async addProject(params) {
-    params.creator = this.ctx.session.id
-    const pro = await this.ctx.model.Project.create(params)
-    let companyList = params.companyIds || []
-    companyList = companyList.map( c => {
+    params.creator = this.ctx.session.id;
+    const pro = await this.ctx.model.Project.create(params);
+    let companyList = params.companyIds || [];
+    companyList = companyList.map(c => {
       return {
         projectId: pro.id,
         companyId: c,
-        creator: params.creator
-      }
-    })
+        creator: params.creator,
+      };
+    });
 
-    return await this.ctx.model.CompanyProject.bulkCreate(companyList)
+    return await this.ctx.model.CompanyProject.bulkCreate(companyList);
   }
 
   async updateProject(params) {
-    await this.ctx.model.CompanyProject.destroy({ where: {projectId: params.id}})
-    params.creator = this.ctx.session.id
+    await this.ctx.model.CompanyProject.destroy({ where: { projectId: params.id } });
+    params.creator = this.ctx.session.id;
 
-    let companyList = params.companyIds || []
-    companyList = companyList.map( c => {
+    let companyList = params.companyIds || [];
+    companyList = companyList.map(c => {
       return {
         projectId: params.id,
         companyId: c,
-        creator: params.creator
-      }
-    })
+        creator: params.creator,
+      };
+    });
     await this.ctx.model.Project.update(params, {
-      where: { id: params.id }
-    })
-    return await this.ctx.model.CompanyProject.bulkCreate(companyList)
+      where: { id: params.id },
+    });
+    return await this.ctx.model.CompanyProject.bulkCreate(companyList);
   }
 
   async deleteProject(id) {
-    await this.ctx.model.CompanyProject.update({state: 1}, { projectId: id})
+    await this.ctx.model.CompanyProject.update({ state: 1 }, { projectId: id });
     return await this.ctx.model.Project.update({
       state: 1,
     }, {

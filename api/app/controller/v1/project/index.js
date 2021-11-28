@@ -1,13 +1,13 @@
 'use strict';
 
 const Controller = require('egg').Controller;
-const { RoleLevel } = require('../../../constant/roleLevel')
+const { RoleLevel } = require('../../../constant/roleLevel');
 
 class ProjectController extends Controller {
   async index() {
     const { ctx } = this;
-    if( ctx.session.level === RoleLevel.Admin) {
-      ctx.query.creator = ctx.session.id
+    if (ctx.session.level === RoleLevel.Admin) {
+      ctx.query.creator = ctx.session.id;
     }
     return ctx.success(await ctx.service.project.findWithPager({
       ...ctx.query,
@@ -29,7 +29,7 @@ class ProjectController extends Controller {
     const { ctx } = this;
     const params = ctx.request.body;
 
-    if(!params.id){
+    if (!params.id) {
       return ctx.fail(1004, '该项目不存在');
     }
     return ctx.success(await ctx.service.project.updateProject(params));
