@@ -53,7 +53,7 @@ class CompanyInfoService extends Service {
     const res = await this.ctx.model.CompanyInfo.findAndCountAll({
       where,
       attributes: [ 'id', 'name', 'representative', 'contact', 'contact_info', 'comment', 'grade', 'score', 'inspect_time', 'leadtime',
-        'cooporateType', 'contract' ],
+        'cooporateType', 'contract', 'productType' ],
       offset,
       limit,
       order
@@ -120,6 +120,13 @@ class CompanyInfoService extends Service {
         },
       ];
     }
+
+    if (params.productType) {
+      where.productType = {
+        [Op.eq]: params.productType,
+      };
+    }
+
     const res = await this.ctx.model.CompanyInfo.findAll({
       where,
       attributes: [ 'id', 'name' ],

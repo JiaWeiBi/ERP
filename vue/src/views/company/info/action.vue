@@ -22,28 +22,72 @@
           <el-input v-model="temp.contact_info" />
         </el-form-item>
         <el-form-item label="备注" prop="comment">
-          <el-input v-model="temp.comment" type="textarea" :autosize="{ minRows: 2, maxRows: 4}" />
+          <el-input
+            v-model="temp.comment"
+            type="textarea"
+            :autosize="{ minRows: 2, maxRows: 4 }"
+          />
         </el-form-item>
-        <el-form-item v-if="roleCheck(levelMap.SuperAdmin)" label="评级" prop="grade">
+        <el-form-item
+          v-if="roleCheck(levelMap.SuperAdmin)"
+          label="评级"
+          prop="grade"
+        >
           <el-input v-model="temp.grade" />
         </el-form-item>
-        <el-form-item v-if="roleCheck(levelMap.SuperAdmin)" label="评分" prop="score">
+        <el-form-item
+          v-if="roleCheck(levelMap.SuperAdmin)"
+          label="评分"
+          prop="score"
+        >
           <el-input v-model="temp.score" type="number" min="0" max="100" />
         </el-form-item>
-        <el-form-item v-if="roleCheck(levelMap.SuperAdmin)" label="考察时间" prop="inspect_time">
+        <el-form-item
+          v-if="roleCheck(levelMap.SuperAdmin)"
+          label="考察时间"
+          prop="inspect_time"
+        >
           <el-date-picker v-model="temp.inspect_time" type="datetime" />
         </el-form-item>
         <el-form-item label="生产周期(天)" prop="leadtime">
           <el-input v-model="temp.leadtime" type="number" />
         </el-form-item>
         <el-form-item label="合作方式">
-          <el-select v-model="temp.cooporateType" class="filter-item" placeholder="选择合作方式">
-            <el-option v-for="item in cooporateTypeOptions" :key="item.id" :label="item.name" :value="item.id" />
+          <el-select
+            v-model="temp.cooporateType"
+            class="filter-item"
+            placeholder="选择合作方式"
+          >
+            <el-option
+              v-for="item in cooporateTypeOptions"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id"
+            />
           </el-select>
         </el-form-item>
         <el-form-item label="已签合同" prop="contract">
           <el-input v-model="temp.contract" />
         </el-form-item>
+
+        <el-form-item label="生产品类" prop="productType">
+          <el-select
+            v-model="temp.productType"
+            placeholder="请选择"
+            clearable
+            filterable
+            style="width: 90px"
+            class="filter-item"
+          >
+            <el-option
+              v-for="item in productionOptions"
+              :key="item.key"
+              :label="item.display_name"
+              :value="item.key"
+            />
+          </el-select>
+        </el-form-item>
+
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="cancel"> 取消 </el-button>
@@ -57,6 +101,7 @@
 import { commonRequest } from '@/api/common'
 import { roleCheck } from '@/common/rolePermission'
 import { levelMap, cooporateTypeOptions } from '@/common/options'
+import { productionOptions } from '@/common/options'
 
 export default {
   name: 'CompanyInfoAction',
@@ -91,7 +136,8 @@ export default {
       },
       cooporateTypeOptions: cooporateTypeOptions,
       temp: {},
-      levelMap: levelMap
+      levelMap: levelMap,
+      productionOptions
     }
   },
   computed: {

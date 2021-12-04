@@ -311,6 +311,7 @@ export default {
       if (params.companyKeyword) {
         compOpt.keyword = params.companyKeyword
       }
+      compOpt.productType = this.type
       commonRequest('get', 'v1/searchAll/company', compOpt).then((res) => {
         this.companyOptions = res.data
       })

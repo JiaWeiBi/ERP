@@ -20,6 +20,7 @@ module.exports = app => {
     creator: INTEGER,
     cooporateType: INTEGER,
     contract: STRING(50),
+    productType: INTEGER,
   }, {
     // freezeTableName: true,
     tableName: 'company_info',

@@ -13,7 +13,10 @@ export const levelMap = {
 // 品类大项
 export const productionOptions = [
   { key: 1, display_name: '大家具' },
-  { key: 2, display_name: '灯具' }
+  { key: 2, display_name: '灯具' },
+  { key: 3, display_name: '窗帘布艺地毯' },
+  { key: 4, display_name: '挂画' },
+  { key: 5, display_name: '饰品' }
 ]
 export const productionMap = {
   Furniture: 1,
