@@ -10,6 +10,7 @@ class ProjectService extends Service {
     };
     const limit = parseInt(params.limit || 20);
     const offset = ((params.page || 1) - 1) * limit;
+    const order = []
 
     if (params.creator) {
       where.creator = {
@@ -21,6 +22,9 @@ class ProjectService extends Service {
       where.name = {
         [Op.substring]: params.keyword,
       };
+    }
+    if(params.sort){
+      order.push(params.sort.split(','))
     }
     const res = await this.ctx.model.Project.findAndCountAll({
       where,
@@ -34,6 +38,7 @@ class ProjectService extends Service {
       attributes: [ 'id', 'name', 'desc' ],
       offset,
       limit,
+      order
     });
     return res || {};
   }

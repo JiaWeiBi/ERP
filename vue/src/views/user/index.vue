@@ -60,39 +60,33 @@
       <el-table-column
         label="账号"
         prop="acc"
-        sortable="custom"
         align="center"
       />
       <el-table-column
         label="电话"
         prop="phone"
-        sortable="custom"
         align="center"
       />
       <el-table-column
         label="邮箱"
         prop="email"
-        sortable="custom"
         align="center"
       />
       <el-table-column
         label="等级"
         prop="level"
-        sortable="custom"
         align="center"
         :formatter="levelFormatter"
       />
       <el-table-column
         label="创建时间"
         prop="createdAt"
-        sortable="custom"
         align="center"
         :formatter="dateFormatter"
       />
       <el-table-column
         label="创建者Id"
         prop="creater"
-        sortable="custom"
         align="center"
         width="80"
       />

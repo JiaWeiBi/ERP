@@ -49,17 +49,14 @@
       style="width: 100%"
       @sort-change="sortChange"
     >
+      <el-table-column type="index" width="50" label="序号" />
+      <el-table-column label="供应商名称" prop="name" align="center" />
       <el-table-column
         label="ID"
         prop="id"
         sortable="custom"
         align="center"
         width="80"
-      />
-      <el-table-column
-        label="供应商名称"
-        prop="name"
-        align="center"
       />
       <el-table-column
         v-if="roleCheck(levelMap.Admin)"
@@ -89,7 +86,6 @@
         v-if="roleCheck(levelMap.SuperAdmin)"
         label="评级"
         prop="grade"
-        sortable="custom"
         align="center"
         width="80"
       />
@@ -97,7 +93,6 @@
         v-if="roleCheck(levelMap.SuperAdmin)"
         label="评分(100)"
         prop="score"
-        sortable="custom"
         align="center"
         width="120"
       />
@@ -105,7 +100,6 @@
         v-if="roleCheck(levelMap.SuperAdmin)"
         label="考察时间"
         prop="inspect_time"
-        sortable="custom"
         align="center"
         width="120"
         :formatter="timezoneFormatter"
@@ -113,7 +107,6 @@
       <el-table-column
         label="生产周期(天)"
         prop="leadtime"
-        sortable="custom"
         align="center"
         width="140"
       />
@@ -166,8 +159,8 @@ export default {
       dialogStatus: '',
       downloadLoading: false,
       textMap: {
-        'create': '添加',
-        'edit': '编辑'
+        create: '添加',
+        edit: '编辑'
       },
       selectItem: null,
       levelMap: levelMap
@@ -175,9 +168,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters([
-      'roleLevel'
-    ])
+    ...mapGetters(['roleLevel'])
   },
   created() {
     this.listQuery.grade = this.$route.meta.title
@@ -203,11 +194,23 @@ export default {
     //   this.dialogFormVisible = true
     // },
     handleDelete(row, index) {
-      commonRequest('delete', this.actionUrl + '/' + row.id, null, { ids: [row.id] }).then((res) => {
+      commonRequest('delete', this.actionUrl + '/' + row.id, null, {
+        ids: [row.id]
+      }).then((res) => {
         this.getList()
       })
     },
-    sortChange() {},
+    sortChange(column) {
+      let order
+      if (column.order === 'descending') {
+        order = 'desc'
+      }
+      if (column.order === 'ascending') {
+        order = 'asc'
+      }
+      this.listQuery.sort = column.prop + ',' + order
+      this.getList()
+    },
     timezoneFormatter(row, column) {
       return timezoneFormatter(row[column.property])
     },

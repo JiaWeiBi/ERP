@@ -61,23 +61,16 @@
       style="width: 100%"
       @sort-change="sortChange"
     >
-      <el-table-column
+      <el-table-column type="index" width="50" label="序号" />
+      <el-table-column label="分类" prop="categoryName" align="center" />
+      <el-table-column label="供应商名称" prop="companyName" align="center" />
+      <!-- <el-table-column
         label="ID"
         prop="id"
         sortable="custom"
         align="center"
         width="80"
-      />
-      <el-table-column
-        label="分类"
-        prop="categoryName"
-        align="center"
-      />
-      <el-table-column
-        label="供应商名称"
-        prop="companyName"
-        align="center"
-      />
+      /> -->
       <el-table-column
         v-if="roleCheck(levelMap.Admin)"
         label="法人代表"
@@ -121,15 +114,21 @@
         align="center"
         :formatter="timezoneFormatter"
       />
-      <el-table-column
-        label="生产周期(天)"
-        prop="leadtime"
-        align="center"
-      />
+      <el-table-column label="生产周期(天)" prop="leadtime" align="center" />
 
-      <el-table-column v-if="roleCheck(levelMap.SuperAdmin)" label="操作" align="center" width="230" class-name="small-padding fixed-width">
-        <template slot-scope="{row,$index}">
-          <el-button size="mini" type="danger" @click="handleDelete(row,$index)">
+      <el-table-column
+        v-if="roleCheck(levelMap.SuperAdmin)"
+        label="操作"
+        align="center"
+        width="230"
+        class-name="small-padding fixed-width"
+      >
+        <template slot-scope="{ row, $index }">
+          <el-button
+            size="mini"
+            type="danger"
+            @click="handleDelete(row, $index)"
+          >
             删除
           </el-button>
         </template>
@@ -143,23 +142,50 @@
       @pagination="getList"
     />
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
-      <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
+      <el-form
+        ref="dataForm"
+        :rules="rules"
+        :model="temp"
+        label-position="left"
+        label-width="70px"
+        style="width: 400px; margin-left: 50px"
+      >
         <el-form-item label="分类">
-          <el-select v-model="temp.categoryId" class="filter-item" placeholder="选择分类">
-            <el-option v-for="item in categoryOptions" :key="item.id" :label="item.name" :value="item.id" />
+          <el-select
+            v-model="temp.categoryId"
+            class="filter-item"
+            placeholder="选择分类"
+          >
+            <el-option
+              v-for="item in categoryOptions"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id"
+            />
           </el-select>
         </el-form-item>
         <el-form-item label="供应商">
-          <el-select v-model="temp.companyId" class="filter-item" placeholder="选择供应商" filterable>
-            <el-option v-for="item in companyOptions" :key="item.id" :label="item.name" :value="item.id" />
+          <el-select
+            v-model="temp.companyId"
+            class="filter-item"
+            placeholder="选择供应商"
+            filterable
+          >
+            <el-option
+              v-for="item in companyOptions"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id"
+            />
           </el-select>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">
-          取消
-        </el-button>
-        <el-button type="primary" @click="dialogStatus==='create'?createData():updateData()">
+        <el-button @click="dialogFormVisible = false"> 取消 </el-button>
+        <el-button
+          type="primary"
+          @click="dialogStatus === 'create' ? createData() : updateData()"
+        >
           确定
         </el-button>
       </div>
@@ -197,7 +223,7 @@ export default {
       dialogStatus: '',
       downloadLoading: false,
       textMap: {
-        'create': '添加'
+        create: '添加'
       },
       dataForm: [],
       rules: {
@@ -221,10 +247,20 @@ export default {
   methods: {
     getList() {
       this.listLoading = true
-      commonRequest('get', this.actionUrl, { ...this.listQuery, type: this.type }).then((res) => {
+      commonRequest('get', this.actionUrl, {
+        ...this.listQuery,
+        type: this.type
+      }).then((res) => {
         const rows = res.data.rows
         this.list = rows.map((o) => {
-          return { ...o, ...o.category, ...o.companyInfo, categoryName: o.category.name, companyName: o.companyInfo.name, id: o.id }
+          return {
+            ...o,
+            ...o.category,
+            ...o.companyInfo,
+            categoryName: o.category.name,
+            companyName: o.companyInfo.name,
+            id: o.id
+          }
         })
         this.total = res.data.count
         this.listLoading = false
@@ -254,13 +290,15 @@ export default {
       })
     },
     handleDelete(row, index) {
-      commonRequest('delete', this.actionUrl + '/' + row.id, null, { ids: [row.id] }).then((res) => {
+      commonRequest('delete', this.actionUrl + '/' + row.id, null, {
+        ids: [row.id]
+      }).then((res) => {
         this.getList()
       })
     },
     sortChange() {},
     getOptions(params) {
-    // 分类数据
+      // 分类数据
       const cateOpt = { type: this.type }
       if (params.categoryKeyword) {
         cateOpt.keyword = params.categoryKeyword

@@ -23,23 +23,21 @@
       style="width: 100%"
       @sort-change="sortChange"
     >
+      <el-table-column type="index" width="50" label="序号" />
+      <el-table-column
+        label="名称"
+        prop="name"
+        align="center"
+      />
       <el-table-column
         label="ID"
         prop="id"
-        sortable="custom"
         align="center"
         width="80"
       />
       <el-table-column
-        label="名称"
-        prop="name"
-        sortable="custom"
-        align="center"
-      />
-      <el-table-column
         label="描述"
         prop="desc"
-        sortable="custom"
         align="center"
       />
 

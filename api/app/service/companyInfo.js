@@ -10,6 +10,7 @@ class CompanyInfoService extends Service {
     };
     const limit = parseInt(params.limit || 20);
     const offset = ((params.page || 1) - 1) * limit;
+    const order = []
 
     if (params.score) {
       where.score = {
@@ -46,12 +47,16 @@ class CompanyInfoService extends Service {
         },
       ];
     }
+    if(params.sort){
+      order.push(params.sort.split(','))
+    }
     const res = await this.ctx.model.CompanyInfo.findAndCountAll({
       where,
       attributes: [ 'id', 'name', 'representative', 'contact', 'contact_info', 'comment', 'grade', 'score', 'inspect_time', 'leadtime',
         'cooporateType', 'contract' ],
       offset,
       limit,
+      order
     });
     return res || {};
   }

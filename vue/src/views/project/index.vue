@@ -24,7 +24,6 @@
       >
         添加
       </el-button>
-
     </div>
 
     <el-table
@@ -37,6 +36,12 @@
       style="width: 100%"
       @sort-change="sortChange"
     >
+      <el-table-column type="index" width="50" label="序号" />
+      <el-table-column
+        label="名称"
+        prop="name"
+        align="center"
+      />
       <el-table-column
         label="ID"
         prop="id"
@@ -45,31 +50,36 @@
         width="80"
       />
       <el-table-column
-        label="名称"
-        prop="name"
-        sortable="custom"
-        align="center"
-      />
-      <el-table-column
         label="描述"
         prop="desc"
-        sortable="custom"
         align="center"
       />
       <el-table-column
         label="供应商"
         prop="company"
-        sortable="custom"
         align="center"
         :formatter="companyFormater"
       />
 
-      <el-table-column label="操作" align="center" width="230" class-name="small-padding fixed-width">
-        <template slot-scope="{row,$index}">
-          <el-button size="mini" type="primary" @click="handleEdit(row,$index)">
+      <el-table-column
+        label="操作"
+        align="center"
+        width="230"
+        class-name="small-padding fixed-width"
+      >
+        <template slot-scope="{ row, $index }">
+          <el-button
+            size="mini"
+            type="primary"
+            @click="handleEdit(row, $index)"
+          >
             编辑
           </el-button>
-          <el-button size="mini" type="danger" @click="handleDelete(row,$index)">
+          <el-button
+            size="mini"
+            type="danger"
+            @click="handleDelete(row, $index)"
+          >
             删除
           </el-button>
         </template>
@@ -83,7 +93,14 @@
       @pagination="getList"
     />
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
-      <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
+      <el-form
+        ref="dataForm"
+        :rules="rules"
+        :model="temp"
+        label-position="left"
+        label-width="70px"
+        style="width: 400px; margin-left: 50px"
+      >
         <el-form-item label="名称" prop="name">
           <el-input v-model="temp.name" />
         </el-form-item>
@@ -91,18 +108,25 @@
           <el-input v-model="temp.desc" type="textarea" />
         </el-form-item>
         <el-form-item label="供应商">
-          <el-select v-model="temp.companyIds" class="filter-item" placeholder="选择供应商" filterable multiple>
-            <el-option v-for="item in companyOptions" :key="item.id" :label="item.name" :value="item.id" />
+          <el-select
+            v-model="temp.companyIds"
+            class="filter-item"
+            placeholder="选择供应商"
+            filterable
+            multiple
+          >
+            <el-option
+              v-for="item in companyOptions"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id"
+            />
           </el-select>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">
-          取消
-        </el-button>
-        <el-button type="primary" @click="createData()">
-          确定
-        </el-button>
+        <el-button @click="dialogFormVisible = false"> 取消 </el-button>
+        <el-button type="primary" @click="createData()"> 确定 </el-button>
       </div>
     </el-dialog>
   </div>
@@ -130,7 +154,7 @@ export default {
       dialogStatus: '',
       downloadLoading: false,
       textMap: {
-        'create': '添加'
+        create: '添加'
       },
       dataForm: [],
       rules: {
@@ -164,8 +188,16 @@ export default {
     createData() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
-          const url = this.dialogStatus === 'create' ? this.actionUrl : this.actionUrl + '/' + this.temp.id
-          commonRequest(this.dialogStatus === 'create' ? 'post' : 'put', url, {}, this.temp).then(() => {
+          const url =
+            this.dialogStatus === 'create'
+              ? this.actionUrl
+              : this.actionUrl + '/' + this.temp.id
+          commonRequest(
+            this.dialogStatus === 'create' ? 'post' : 'put',
+            url,
+            {},
+            this.temp
+          ).then(() => {
             this.temp = {}
             this.getList()
             this.dialogFormVisible = false
@@ -183,7 +215,7 @@ export default {
       this.dialogStatus = 'edit'
       this.temp = row
       this.temp.companyIds = []
-      row.company.forEach(c => {
+      row.company.forEach((c) => {
         this.temp.companyIds.push(c.companyId)
       })
 
@@ -191,11 +223,23 @@ export default {
       this.dialogFormVisible = true
     },
     handleDelete(row, index) {
-      commonRequest('delete', this.actionUrl + '/' + row.id, null, { ids: [row.id] }).then((res) => {
+      commonRequest('delete', this.actionUrl + '/' + row.id, null, {
+        ids: [row.id]
+      }).then((res) => {
         this.getList()
       })
     },
-    sortChange() {},
+    sortChange(column) {
+      let order
+      if (column.order === 'descending') {
+        order = 'desc'
+      }
+      if (column.order === 'ascending') {
+        order = 'asc'
+      }
+      this.listQuery.sort = column.prop + ',' + order
+      this.getList()
+    },
     getOptions(params) {
       // 供应商数据
       const compOpt = {}
@@ -206,14 +250,16 @@ export default {
     companyFormater(row) {
       const company = row.company || []
       const l1 = []
-      company.forEach(o => {
+      company.forEach((o) => {
         l1.push(o.companyId)
       })
-      let cl = this.companyOptions.filter(c => {
+      let cl = this.companyOptions.filter((c) => {
         return l1.includes(c.id)
       })
 
-      cl = cl.map(o => { return o.name })
+      cl = cl.map((o) => {
+        return o.name
+      })
       return cl.join('|')
     }
   }
